@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from '../auth/services/auth.service';
+import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -19,9 +21,15 @@ export class LoginComponent implements OnInit {
    loginForm : FormGroup;
    submitted : false;
 
-  constructor(
+  constructor
+  (
     private authService: AuthService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { 
+    
+  }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -39,7 +47,15 @@ export class LoginComponent implements OnInit {
   onLogin(){
    
     const {email, password} = this.loginForm.value;
-    this.authService.login(email, password);
+    this.authService.login(email, password)
+        .pipe(first())
+        .subscribe(
+            data => {
+                this.router.navigate(['/']);
+            },
+            error => {
+                console.log(error);
+            });
     
   }
 
