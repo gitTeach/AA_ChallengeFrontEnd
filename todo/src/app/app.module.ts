@@ -10,13 +10,17 @@ import { AngularFireAuthModule} from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
 import { ListComponent } from './list/list.component';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth/services/auth.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    ListComponent
+    ListComponent,
+    LoginComponent 
   ],
   imports: [
     BrowserModule,
