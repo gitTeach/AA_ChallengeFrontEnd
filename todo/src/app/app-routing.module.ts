@@ -9,11 +9,12 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardGuard] },
   { path: 'list', component: ListComponent, canActivate: [AuthGuardGuard] },
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,  { useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

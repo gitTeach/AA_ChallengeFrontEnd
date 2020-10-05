@@ -1,28 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { appUser } from 'src/app/models/appUser';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  
 
-  public isLogged = false;
-
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { 
-
+  constructor( ) {
+    
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  onLogout(){
-    this.authService.logout();
-  }
-
+  
 }
