@@ -1,6 +1,6 @@
 
 <div class="row">
-  <div class="col-lg-2 offset-lg-3">
+  <div class="col-lg-2 offset-lg-2">
     <div class="card text-white bg-success mb-3" style="max-width: 20rem;">
         <div class="card-header text-center">Task Completed</div>
         <div class="card-body">
@@ -24,37 +24,37 @@
         </div>
       </div>
 </div>
+<div class="col-lg-2">
+  <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+      <div class="card-header text-center">Due Today</div>
+      <div class="card-body">
+        <h4 class="card-title text-center">3</h4>
+      </div>
+    </div>
+</div>
 </div>
 
 <div class="row">
   <div class="col-lg-8 offset-lg-2">
     <div class="row">
-
-      <div class="col-lg-4">
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Personal
-              <span class="badge badge-primary badge-pill">14</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Work
-              <span class="badge badge-primary badge-pill">2</span>
-            </li>
-        </ul>
-    </div>
-  
-    <div class="col-lg-8">
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Personal
-              <button class="btn btn-primary btn-sm">Success</button>
-              <span class="badge badge-pill badge-success">Success</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Work
-              <span class="badge badge-primary badge-pill">2</span>
-            </li>
-        </ul>
+    <div class="col-lg-12">
+      <div class="list-group">
+        
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Task Description</h5>
+            <span><i class="fa fa-edit"></i></span>
+          </div>
+          <p class="mb-1">Task Notes.</p>
+          <br>
+          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-hourglass-end" title="Due Today" data-toggle="tooltip" data-placement="top" ></span>
+          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-check" title="Completed" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-exclamation" title="Important" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-star" title="My Day" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-bell" title="Reminder" data-toggle="tooltip" data-placement="top" tooltip ></span>
+        </a>
+        
+      </div>
     </div>
     </div>
 
