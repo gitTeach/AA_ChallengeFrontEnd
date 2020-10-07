@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { appUser } from '../models/appUser';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
 
-  constructor( private authService: AuthService,private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) 
+  constructor(  private authService: AuthService, 
+                private formBuilder: FormBuilder, 
+                private route: ActivatedRoute, 
+                private router: Router,
+                private toastr: ToastrService) 
   {
     this.$authSubscription = this.authService.user$.subscribe((u) => {
       this.appUser = u;
@@ -54,8 +59,10 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.loginForm.value;
     
     this.authService.login(email, password).then((success) => {
+      this.toastr.success('You are successfully logged in');
       this.router.navigate(['/list']);
     }).catch((err) => {
+      this.toastr.error(err.message);
       this.router.navigate(['/login']);
       console.log('Error Login:', err.message);
     });;

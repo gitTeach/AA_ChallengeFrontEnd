@@ -13,7 +13,8 @@ import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth/services/auth.service';
 import { TaskComponent } from './task/task.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [	
@@ -30,6 +31,8 @@ import { TaskComponent } from './task/task.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
