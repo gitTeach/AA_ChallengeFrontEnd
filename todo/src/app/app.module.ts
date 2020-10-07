@@ -12,16 +12,18 @@ import { HomeComponent } from './home/home.component';
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth/services/auth.service';
+import { TaskComponent } from './task/task.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     NavbarComponent,
     HomeComponent,
     ListComponent,
-    LoginComponent 
-  ],
+    LoginComponent,
+      TaskComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
