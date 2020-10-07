@@ -12,11 +12,19 @@
       <li class="nav-item" routerLinkActive="active" *ngIf="isLogged">
         <a class="nav-link" routerLink="/list" >List</a>
       </li>
-      <li class="nav-item" *ngIf="isLogged">
-        <a class="nav-link"  href="#" (click)="onLogout()">Logout</a>
+      <li class="nav-item" routerLinkActive="active" *ngIf="isLogged">
+        <a class="nav-link" routerLink="/task" >Task</a>
       </li>
+      
     </ul>
-    
+
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item pull-right" *ngIf="isLogged">
+          <a class="nav-link pull-right"  href="#" (click)="onLogout()">Logout</a>
+        </li>
+    </ul>
+    </div>
   </div>
 </nav>
 <br>
