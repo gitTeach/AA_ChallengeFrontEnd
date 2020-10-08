@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './auth/services/auth.service';
 import { appUser } from './models/appUser';
+import { setTheme } from 'ngx-bootstrap/utils'
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,8 @@ export class AppComponent {
     this.$authSubscription = this.authService.user$.subscribe((u) => {
       this.appUser = u;
     });
+
+    setTheme('bs3');
   }
 
   ngOnInit() {

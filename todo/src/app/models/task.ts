@@ -5,8 +5,8 @@ export class Task {
     description: string;
     remindDate: Date;
     dueDate: Date;
-    MyDayDate: Date;
-    Notes : Date;
+    myDayDate: Date;
+    notes : Date;
     isCompleted : boolean;
     isImportant : boolean;
     list: List

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AngularFireModule} from '@angular/fire';
 import { AngularFireAuthModule} from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
@@ -19,6 +19,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddEditTaskComponent } from './task/addedit-task.component';
+import {DpDatePickerModule} from 'ng2-date-picker';
+import  {BsDatepickerModule} from 'ngx-bootstrap/datepicker'
 
 @NgModule({
   declarations: [	
@@ -27,11 +30,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     ListComponent,
     LoginComponent,
-    TaskComponent
+    TaskComponent,
+    AddEditTaskComponent
    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -39,6 +44,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgbModule,
+    DpDatePickerModule, 
+    BsDatepickerModule.forRoot()
   ],
   providers: [AuthGuardGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

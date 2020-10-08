@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardGuard] },
   { path: 'list', component: ListComponent, canActivate: [AuthGuardGuard] },
-  { path: 'task/:category', component: TaskComponent, canActivate: [AuthGuardGuard] },
+  { path: 'task/show/:category', component: TaskComponent, canActivate: [AuthGuardGuard] },
   { path: 'task/bylist/:idlist', component: TaskComponent, canActivate: [AuthGuardGuard] },
   { path: 'task/add', component: AddEditTaskComponent, canActivate: [AuthGuardGuard] },
   { path: 'task/edit/:id', component: AddEditTaskComponent, canActivate: [AuthGuardGuard] },
