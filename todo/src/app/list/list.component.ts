@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { auth } from 'firebase';
 import { ToastrService } from 'ngx-toastr';
-import { first } from 'rxjs/operators';
 import { AuthService } from '../auth/services/auth.service';
 import { ListService } from '../auth/services/list.service';
 import { List } from '../models/list';
@@ -52,10 +50,6 @@ export class ListComponent implements OnInit {
 
   getListsForUser(uid: string) {
     this.listCollection = this.listService.getListsForUser(uid);
-  }
-
-  onClick() {
-    console.log('click');
   }
 
   createList() {

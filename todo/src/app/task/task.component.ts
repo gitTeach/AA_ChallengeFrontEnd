@@ -8,6 +8,7 @@ import { ListService } from '../auth/services/list.service';
 import { TaskService } from '../auth/services/task.service';
 import { Router, ActivatedRoute,  ParamMap } from '@angular/router';
 import { List } from '../models/list';
+import { Route } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class TaskComponent implements OnInit {
   constructor(private taskService : TaskService,
               private authService: AuthService,
               private route: ActivatedRoute,
+              private router: Router,
               private toastr: ToastrService) 
   { 
     this.today = new Date();
@@ -78,6 +80,10 @@ export class TaskComponent implements OnInit {
       || item.notes.toLowerCase().indexOf(value.toLowerCase()) > -1
       || item.listName.toLowerCase().indexOf(value.toLowerCase()) > -1
     );
+  }
+
+  addTask(){
+    this.router.navigate(['/task/add']);
   }
   
 }
