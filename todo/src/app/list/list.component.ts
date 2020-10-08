@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { auth } from 'firebase';
 import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
@@ -27,7 +28,8 @@ export class ListComponent implements OnInit {
     private listService: ListService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router : Router
   ) {}
 
   async ngOnInit() {
@@ -87,4 +89,8 @@ export class ListComponent implements OnInit {
     this.add = false;
     this.listForm.reset();
   }
+
+  // viewListDetail(idList : number){
+  //   this.router.navigate['task/bylist/', {idlist :idList }]
+  // }
 }

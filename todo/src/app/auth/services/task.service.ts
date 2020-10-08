@@ -33,10 +33,11 @@ export class TaskService {
     //                     .pipe(retry(1), catchError(this.handleError));
     // }
 
-    getTasksForUser(userId: string) {
+    getTasksDetail(userId: string, idList : number) {
         let params = new HttpParams();
         params = params.append('userId', userId);
-        return this.http.get<Task[]>(`${baseUrl}/GetTasksForUser`, { params: params })
+        params = params.append('idList', idList.toString());
+        return this.http.get<Task[]>(`${baseUrl}/GetTasksDetail`, { params: params })
     }
 
     getTask(idTask: number): Observable<Task> {

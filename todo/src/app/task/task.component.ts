@@ -21,13 +21,14 @@ export class TaskComponent implements OnInit {
   public user: any;
   category : string;
   idlist :  number;
+  today : Date;
 
   constructor(private taskService : TaskService,
               private authService: AuthService,
               private route: ActivatedRoute,
               private toastr: ToastrService) 
   { 
-    
+    this.today = new Date();
     const category = 'category';
     const idlist = 'idlist';
     
@@ -48,11 +49,11 @@ export class TaskComponent implements OnInit {
     this.user = await this.authService.getCurrentFirebaseUser();
 
     if(this.category){
-      this.getTasksForUser(this.user.uid);
+      this.getTasksDetail(this.user.uid, 0);
     }
 
     if(this.idlist){
-      this.getTasksForList(this.idlist);
+      this.getTasksDetail(this.user.uid,this.idlist);
     }
 
   }
@@ -60,8 +61,8 @@ export class TaskComponent implements OnInit {
   getTasksForList(idList: number) {
     return this.taskService.getTasksForList(idList).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
   }
-  getTasksForUser(userId: string) {
-    return this.taskService.getTasksForUser(userId).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
+  getTasksDetail(userId: string, idlist:number) {
+    return this.taskService.getTasksDetail(userId, idlist).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
   }
 
   assignCopy() {
@@ -73,7 +74,9 @@ export class TaskComponent implements OnInit {
       this.assignCopy();
     } // when nothing has typed
     this.taskCollectionFiltered = Object.assign([], this.taskCollection).filter(
-      (item) => item.description.toLowerCase().indexOf(value.toLowerCase()) > -1
+      (item) => item.description.toLowerCase().indexOf(value.toLowerCase()) > -1 
+      || item.notes.toLowerCase().indexOf(value.toLowerCase()) > -1
+      || item.listName.toLowerCase().indexOf(value.toLowerCase()) > -1
     );
   }
   

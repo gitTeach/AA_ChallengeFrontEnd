@@ -19,24 +19,22 @@
     <div class="col-lg-12">
       <div class="list-group">
         
-        <a *ngFor="let taskitem of taskCollectionFiltered" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a *ngFor="let taskitem of taskCollectionFiltered" class="list-group-item list-group-item-action flex-column align-items-start">
           <div>
-            <span class="badge badge-pill badge-primary">{{taskitem.name}}</span>
-            <button  style="float: right;" class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i> Edit</button>
+            <span class="badge badge-pill badge-primary">{{taskitem.listName}}</span>
           </div>
           <br>
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{taskitem.description}}</h5>
-            
           </div>
           <br>
           <p class="mb-1">{{taskitem.notes}}</p>
           <br>
-          <span style="cursor:pointer; padding-right: 2%;" class="fa fa-hourglass-end" title="Due Today" data-toggle="tooltip" data-placement="top" ></span>
-          <span style="cursor:pointer; padding-right: 2%;" class="fa fa-check" title="Completed" data-toggle="tooltip" data-placement="top" tooltip ></span>
-          <span style="cursor:pointer; padding-right: 2%;" class="fa fa-exclamation" title="Important" data-toggle="tooltip" data-placement="top" tooltip ></span>
-          <span style="cursor:pointer; padding-right: 2%;" class="fa fa-star" title="My Day" data-toggle="tooltip" data-placement="top" tooltip ></span>
-          <span style="cursor:pointer; padding-right: 2%;" class="fa fa-bell" title="Reminder" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <span style="padding-right: 2%;" [hidden]="taskitem.bDueDate" class="fa fa-hourglass-end" title="Due Today" data-toggle="tooltip" data-placement="top" ></span>
+          <span style="padding-right: 2%;" [hidden]="!taskitem.isCompleted" class="fa fa-check" title="Completed" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <span style="padding-right: 2%;" [hidden]="!taskitem.isImportant" class="fa fa-exclamation" title="Important" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <span style="padding-right: 2%;" [hidden]="!taskitem.bMyDayDate" class="fa fa-star" title="My Day" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <span style="padding-right: 2%;" [hidden]="taskitem.remindDate != null || taskitem.remindDate != undefined " class="fa fa-bell" title="Reminder" data-toggle="tooltip" data-placement="top" tooltip ></span>
         </a>
         
       </div>

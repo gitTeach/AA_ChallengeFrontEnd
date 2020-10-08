@@ -35,8 +35,8 @@
 </div>
 
 <div class="row" style="padding-bottom: 1%;">
-  <div class="col-lg-8 offset-lg-2">
-    <button *ngIf="!add" class="btn btn-sm btn-primary" (click)="addList()">+ Add List</button>
+  <div class="col-lg-2 offset-lg-2">
+    <button *ngIf="!add" class="btn btn-sm btn-primary btn-block" (click)="addList()">+ Add List</button>
   </div>
 
   <div class="col-lg-8 offset-lg-2" *ngIf="add">
@@ -57,8 +57,8 @@
               <div *ngIf="currentListForm.description.errors.maxlength">The length of name must be 200 characters or fewer. </div>
           </div>
       </div>
-      <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
-      <button type="reset" class="btn btn-primary btn-lg btn-block" (click)="onReset()">Cancel</button>
+      <button type="submit" class="btn btn-primary btn-sm btn-block">Save</button>
+      <button type="reset" class="btn btn-primary btn-sm btn-block" (click)="onReset()">Cancel</button>
      </form>
   </div>
 
@@ -70,7 +70,7 @@
     <div class="col-lg-12">
       <div class="list-group">
         
-        <a *ngFor="let listitem of (listCollection | async)" href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+        <a *ngFor="let listitem of (listCollection | async)" [routerLink]="['../task/bylist/',listitem.id]" class="list-group-item list-group-item-action flex-column align-items-start" >
           
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">{{listitem.name}}</h5>

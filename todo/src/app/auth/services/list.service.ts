@@ -35,7 +35,7 @@ export class ListService {
 
   createListForUser(list : List) : Observable<List>{
     return this.http.post<List>(`${baseUrl}/CreateListForUser`, JSON.stringify(list) , this.httpOptions)
-                    .pipe(retry(1), catchError(this.handleError));;
+                    .pipe(retry(1), catchError(this.handleError));
   }
 
   handleError(error) {
@@ -45,7 +45,6 @@ export class ListService {
     } else {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    this.toastr.error(errorMessage);
     return throwError(errorMessage);
   }
 }
