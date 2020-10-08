@@ -6,6 +6,8 @@ import { first } from 'rxjs/operators';
 import { AuthService } from '../auth/services/auth.service';
 import { ListService } from '../auth/services/list.service';
 import { TaskService } from '../auth/services/task.service';
+import { Router, ActivatedRoute,  ParamMap } from '@angular/router';
+import { List } from '../models/list';
 
 
 @Component({
@@ -14,27 +16,65 @@ import { TaskService } from '../auth/services/task.service';
   styleUrls: ['./task.component.scss']
 })
 export class TaskComponent implements OnInit {
-  public taskCollection: any;
+  public taskCollection = null;
+  public taskCollectionFiltered = null;
   public user: any;
+  category : string;
+  idlist :  number;
 
   constructor(private taskService : TaskService,
               private authService: AuthService,
-              private toastr: ToastrService) { }
+              private route: ActivatedRoute,
+              private toastr: ToastrService) 
+  { 
+    
+    const category = 'category';
+    const idlist = 'idlist';
+    
+    if (this.route.snapshot.params[category]) {
+      this.category = this.route.snapshot.params[category];
+      console.log(this.category);
+    }
+
+    if (this.route.snapshot.params[idlist]) {
+      this.idlist = this.route.snapshot.params[idlist];
+      console.log(this.idlist);
+    }
+
+  }
 
   async ngOnInit() {
 
     this.user = await this.authService.getCurrentFirebaseUser();
-    if (this.user) {
+
+    if(this.category){
       this.getTasksForUser(this.user.uid);
     }
+
+    if(this.idlist){
+      this.getTasksForList(this.idlist);
+    }
+
   }
 
   getTasksForList(idList: number) {
-    this.taskCollection = this.taskService.getTasksForList(idList);
+    return this.taskService.getTasksForList(idList).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
+  }
+  getTasksForUser(userId: string) {
+    return this.taskService.getTasksForUser(userId).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
   }
 
-  getTasksForUser(userId: string) {
-    this.taskCollection = this.taskService.getTasksForUser(userId);
+  assignCopy() {
+    this.taskCollectionFiltered = Object.assign([], this.taskCollectionFiltered);
+  }
+
+  filterItem(value) {
+    if (!value) {
+      this.assignCopy();
+    } // when nothing has typed
+    this.taskCollectionFiltered = Object.assign([], this.taskCollection).filter(
+      (item) => item.description.toLowerCase().indexOf(value.toLowerCase()) > -1
+    );
   }
   
 }

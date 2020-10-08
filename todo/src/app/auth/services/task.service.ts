@@ -26,11 +26,17 @@ export class TaskService {
                         .pipe(retry(1), catchError(this.handleError));
     }
 
-    getTasksForUser(userId: string): Observable<Task[]> {
+    // getTasksForUser(userId: string): Observable<Task[]> {
+    //     let params = new HttpParams();
+    //     params = params.append('userId', userId.toString());
+    //     return this.http.get<Task[]>(`${baseUrl}/GetTasksForUser`, { params: params })
+    //                     .pipe(retry(1), catchError(this.handleError));
+    // }
+
+    getTasksForUser(userId: string) {
         let params = new HttpParams();
-        params = params.append('userId', userId.toString());
+        params = params.append('userId', userId);
         return this.http.get<Task[]>(`${baseUrl}/GetTasksForUser`, { params: params })
-                        .pipe(retry(1), catchError(this.handleError));
     }
 
     getTask(idTask: number): Observable<Task> {
