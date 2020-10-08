@@ -40,7 +40,7 @@
   </div>
 
   <div class="col-lg-8 offset-lg-2" *ngIf="add">
-    <form [formGroup]="listForm"  (ngSubmit)="createList()">
+    <form #myForm="ngForm"  [formGroup]="listForm"  (ngSubmit)="createList()">
       <div class="form-group">
           <label for="name">Name</label>
           <input type="text" class="form-control" formControlName = "name" [ngClass]="{ 'is-invalid': submitted && currentListForm.name.errors }">
@@ -54,9 +54,11 @@
           <input type="text" class="form-control" formControlName = "description" [ngClass]="{ 'is-invalid': submitted && currentListForm.description.errors }">
           <div *ngIf="submitted && currentListForm.description.errors" class="invalid-feedback">
               <div *ngIf="currentListForm.description.errors.required">Description is required</div>
+              <div *ngIf="currentListForm.description.errors.maxlength">The length of name must be 200 characters or fewer. </div>
           </div>
       </div>
       <button type="submit" class="btn btn-primary btn-lg btn-block">Save</button>
+      <button type="reset" class="btn btn-primary btn-lg btn-block" (click)="onReset()">Cancel</button>
      </form>
   </div>
 

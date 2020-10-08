@@ -4,4 +4,6 @@ export class List {
     name: string;
     description: string;
     userId: string;
+
+    constructor(){};
 }

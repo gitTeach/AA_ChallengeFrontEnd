@@ -4,13 +4,14 @@ import { environment } from 'src/environments/environment';
 import { List } from 'src/app/models/list';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 const baseUrl = `${environment.apiUrl}/list`;
 
 @Injectable({ providedIn: 'root' })
 
 export class ListService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastr: ToastrService) {}
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,9 +22,8 @@ export class ListService {
   getListsForUser(userId: string): Observable<List[]> {
     let params = new HttpParams();
     params = params.append('userId', userId);
-    return this.http
-      .get<List[]>(`${baseUrl}/GetListsForUser`, { params: params })
-      .pipe(retry(1), catchError(this.handleError));
+    return this.http.get<List[]>(`${baseUrl}/GetListsForUser`, { params: params })
+                    .pipe(retry(1), catchError(this.handleError));
   }
 
   getListForUser(userId: string, listId: number) {
@@ -33,6 +33,11 @@ export class ListService {
     return this.http.get<List>(`${baseUrl}/GetListForUser`, { params: params });
   }
 
+  createListForUser(list : List) : Observable<List>{
+    return this.http.post<List>(`${baseUrl}/CreateListForUser`, JSON.stringify(list) , this.httpOptions)
+                    .pipe(retry(1), catchError(this.handleError));;
+  }
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
@@ -40,7 +45,7 @@ export class ListService {
     } else {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    //window.alert(errorMessage);
+    this.toastr.error(errorMessage);
     return throwError(errorMessage);
   }
 }
