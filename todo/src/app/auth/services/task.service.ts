@@ -1,29 +1,54 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Task } from 'src/app/models/task';
+import { ToastrService } from 'ngx-toastr';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 const baseUrl = `${environment.apiUrl}/task`;
 
 @Injectable({ providedIn: 'root' })
 
 export class TaskService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private toastr: ToastrService) { }
 
-    getTasksForList(idList: number) {
-        return this.http.get<Task[]>((`${baseUrl}/GetTasksForList${idList}`));
+    httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+    };
+
+    getTasksForList(idList: number): Observable<Task[]> {
+        let params = new HttpParams();
+        params = params.append('idList', idList.toString());
+        return this.http.get<Task[]>(`${baseUrl}/GetTasksForList`, { params: params })
+                        .pipe(retry(1), catchError(this.handleError));
     }
 
-    getTask(idTask: number) {
-        return this.http.get<Task>(`${baseUrl}/GetTask${idTask}`);
+    getTasksForUser(userId: string): Observable<Task[]> {
+        let params = new HttpParams();
+        params = params.append('userId', userId.toString());
+        return this.http.get<Task[]>(`${baseUrl}/GetTasksForUser`, { params: params })
+                        .pipe(retry(1), catchError(this.handleError));
     }
 
-    createTaskForList(idList: number, params) {
-        return this.http.post(`${baseUrl}/createTaskForList${idList}`, params);
+    getTask(idTask: number): Observable<Task> {
+        let params = new HttpParams();
+        params = params.append('idTask', idTask.toString());
+        return this.http.get<Task>(`${baseUrl}/GetTask`, { params: params })
+                        .pipe(retry(1), catchError(this.handleError));
     }
-    
-    updateTask(params) {
-        return this.http.put(`${baseUrl}/UpdateTask`, params);
-    }
+
+    handleError(error) {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          errorMessage = error.error.message;
+        } else {
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        this.toastr.error(errorMessage);
+        return throwError(errorMessage);
+      }
     
 }
