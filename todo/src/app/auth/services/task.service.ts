@@ -41,7 +41,7 @@ export class TaskService {
     }
 
     createTaskForList(task : Task) : Observable<Task>{
-        return this.http.post<Task>(`${baseUrl}/CreateTaskForList`, JSON.stringify(Task) , this.httpOptions)
+        return this.http.post<Task>(`${baseUrl}/CreateTaskForList`, JSON.stringify(task) , this.httpOptions)
     }
 
     getTask(idTask: number): Observable<Task> {

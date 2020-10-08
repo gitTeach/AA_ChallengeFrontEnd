@@ -28,8 +28,13 @@ export class AddEditTaskComponent implements OnInit {
   bsValue = new Date();
   dateModel: any;
 
+  /* Nested Value*/
+  public listCollection: any;
+  public selectedListId: any;
+
   constructor(
     private taskService: TaskService,
+    private listService:ListService,
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -50,6 +55,12 @@ export class AddEditTaskComponent implements OnInit {
   }
 
   async ngOnInit() {
+
+    this.user = await this.authService.getCurrentFirebaseUser();
+    if (this.user) {
+      this.getListsForUser(this.user.uid);
+    }
+
     /* Form Builder */
     this.addEditTaskForm = new FormGroup({
       description: new FormControl('', [
@@ -61,7 +72,8 @@ export class AddEditTaskComponent implements OnInit {
       myDayDate: new FormControl(new Date()),
       notes: new FormControl(),
       isCompleted: new FormControl(false),
-      isImportant: new FormControl(true),
+      isImportant: new FormControl(false),
+      list: new FormControl([Validators.required])
     });
 
     // this.addEditTaskForm = this.formBuilder.group({
@@ -95,7 +107,7 @@ export class AddEditTaskComponent implements OnInit {
 
     /*Getting values from form */
     const {
-      idList,
+      list,
       description,
       remindDate,
       dueDate,
@@ -110,21 +122,36 @@ export class AddEditTaskComponent implements OnInit {
     if (this.action === 'add') {
       let task: Task = {
         id: 0,
-        idList : idList,
+        idList : parseInt(list),
         description: description,
         remindDate: remindDate,
         dueDate: dueDate,
         myDayDate: myDayDate,
         notes: notes,
         isCompleted: isCompleted,
-        isImportant: isImportant,
-        list: new List(),
+        isImportant: isImportant
       };
+
+      console.log(task);
+
+      return this.taskService.createTaskForList(task).subscribe((data) => {
+        this.toastr.success('The task has been created.');
+        this.router.navigate(['/task/show/all']);
+        this.onReset();
+      })
     }
+
+    
   }
 
   onReset() {
     this.submitted = false;
     this.addEditTaskForm.reset();
+  }
+
+  
+
+  getListsForUser(uid: string) {
+    this.listCollection = this.listService.getListsForUser(uid);
   }
 }

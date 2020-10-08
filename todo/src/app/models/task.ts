@@ -10,7 +10,5 @@ export class Task {
     notes : Date;
     isCompleted : boolean;
     isImportant : boolean;
-    list: List
-
     constructor(){};
 }

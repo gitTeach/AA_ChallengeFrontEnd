@@ -4,7 +4,15 @@
       <form [formGroup]="addEditTaskForm"  (ngSubmit)="Save()">
         
         <h3>{{actionTitle}}</h3>
-
+        <div class="form-group">
+          <label for="description">List</label>
+          <select  class="form-control" formControlName = "list" [ngClass]="{ 'is-invalid': submitted && gForm.list.errors }">
+            <option [value]="listItem.id" *ngFor="let listItem of (listCollection | async)">{{listItem.name}}</option>
+          </select>
+          <div *ngIf="submitted && gForm.description.errors" class="invalid-feedback">
+              <div *ngIf="gForm.list.errors.required">Please Select a List. If you haven't registered a list, create one first.</div>
+          </div>
+        </div>
         <div class="form-group">
             <label for="description">Description</label>
             <input type="text" class="form-control" formControlName = "description" [ngClass]="{ 'is-invalid': submitted && gForm.description.errors }">
