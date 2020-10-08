@@ -34,24 +34,27 @@
 </div>
 </div>
 
+<div class="row" style="padding-bottom: 1%;">
+  <div class="col-lg-8 offset-lg-2">
+    <button class="btn btn-sm btn-primary">+ Add List</button>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-lg-8 offset-lg-2">
     <div class="row">
     <div class="col-lg-12">
       <div class="list-group">
         
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a *ngFor="let listitem of (list | async)" href="#" class="list-group-item list-group-item-action flex-column align-items-start" >
+          
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Task Description</h5>
-            <span><i class="fa fa-edit"></i></span>
+            <h5 class="mb-1">{{listitem.name}}</h5>
+            
           </div>
-          <p class="mb-1">Task Notes.</p>
           <br>
-          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-hourglass-end" title="Due Today" data-toggle="tooltip" data-placement="top" ></span>
-          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-check" title="Completed" data-toggle="tooltip" data-placement="top" tooltip ></span>
-          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-exclamation" title="Important" data-toggle="tooltip" data-placement="top" tooltip ></span>
-          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-star" title="My Day" data-toggle="tooltip" data-placement="top" tooltip ></span>
-          <span (click)="onClick()" style="cursor:pointer; padding-right: 2%;" class="fa fa-bell" title="Reminder" data-toggle="tooltip" data-placement="top" tooltip ></span>
+          <p class="mb-1">{{listitem.description}}</p>
+          <br>
         </a>
         
       </div>
@@ -61,7 +64,5 @@
   
 
   </div>
-    
-
 </div>
 

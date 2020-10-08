@@ -85,12 +85,14 @@ export class AuthService {
       });
   }
 
-  // getCurrentUser() {
-  //   return this.afAuth.authState.pipe(first()).toPromise();
-  // }
-
+  getCurrentFirebaseUser(){
+    return this.afAuth.authState.pipe(first()).toPromise();
+  }
+  
   public get getCurrentUser(): appUser {
     return this.user$.value;
   }
+
+  
 
 }

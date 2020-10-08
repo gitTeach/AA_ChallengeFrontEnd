@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
@@ -15,6 +14,10 @@ import { AuthService } from './auth/services/auth.service';
 import { TaskComponent } from './task/task.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthGuardGuard } from './auth/auth-guard.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth/auth-interceptor';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [	
@@ -23,18 +26,19 @@ import { ToastrModule } from 'ngx-toastr';
     HomeComponent,
     ListComponent,
     LoginComponent,
-      TaskComponent
+    TaskComponent
    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
-  providers: [],
+  providers: [AuthGuardGuard, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
