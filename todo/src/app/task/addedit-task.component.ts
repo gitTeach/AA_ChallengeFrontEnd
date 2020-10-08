@@ -22,6 +22,7 @@ export class AddEditTaskComponent implements OnInit {
   /*Parameters*/
   idTask: number;
   action: string = 'add';
+  actionTitle :  string = 'Add a new Task';
 
   /*Date Picker Conf*/
   bsValue = new Date();
@@ -42,6 +43,7 @@ export class AddEditTaskComponent implements OnInit {
     if (this.route.snapshot.params[id]) {
       this.idTask = this.route.snapshot.params[id];
       this.action = 'Edit';
+      this.action = 'Edit Task'
       console.log(this.idTask);
       console.log(this.action);
     }
@@ -50,17 +52,16 @@ export class AddEditTaskComponent implements OnInit {
   async ngOnInit() {
     /* Form Builder */
     this.addEditTaskForm = new FormGroup({
-      firstName: new FormControl(''),
       description: new FormControl('', [
         Validators.required,
         Validators.maxLength(200),
       ]),
-      remindeDate: new FormControl(new Date()),
+      remindDate: new FormControl(new Date()),
       dueDate: new FormControl(new Date(), [ Validators.required]),
       myDayDate: new FormControl(new Date()),
-      Notes: new FormControl(),
-      isCompleted: new FormControl(),
-      isImportant: new FormControl(),
+      notes: new FormControl(),
+      isCompleted: new FormControl(false),
+      isImportant: new FormControl(true),
     });
 
     // this.addEditTaskForm = this.formBuilder.group({
@@ -109,10 +110,11 @@ export class AddEditTaskComponent implements OnInit {
     if (this.action === 'add') {
       let task: Task = {
         id: 0,
+        idList : idList,
         description: description,
-        remindDate: new Date(),
-        dueDate: new Date(),
-        myDayDate: new Date(),
+        remindDate: remindDate,
+        dueDate: dueDate,
+        myDayDate: myDayDate,
         notes: notes,
         isCompleted: isCompleted,
         isImportant: isImportant,
