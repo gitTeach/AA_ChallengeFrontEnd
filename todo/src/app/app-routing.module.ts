@@ -4,6 +4,7 @@ import { AuthGuardGuard } from './auth/auth-guard.guard';
 import { HomeComponent } from './home/home.component';
 import { ListComponent } from './list/list.component';
 import { LoginComponent } from './login/login.component';
+import { AddEditTaskComponent } from './task/addedit-task.component';
 import { TaskComponent } from './task/task.component';
 
 const routes: Routes = [
@@ -11,6 +12,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardGuard] },
   { path: 'list', component: ListComponent, canActivate: [AuthGuardGuard] },
   { path: 'task', component: TaskComponent, canActivate: [AuthGuardGuard] },
+  { path: 'task/add', component: AddEditTaskComponent, canActivate: [AuthGuardGuard] },
+  { path: 'task/edit/:id', component: AddEditTaskComponent, canActivate: [AuthGuardGuard] },
   { path: 'login', component: LoginComponent },
   { path: '**', component: HomeComponent }
 ];
