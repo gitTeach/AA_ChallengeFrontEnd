@@ -49,11 +49,11 @@ export class TaskComponent implements OnInit {
     this.user = await this.authService.getCurrentFirebaseUser();
     
     if(this.category){
-      this.getTasksDetail(this.user.uid, 0, this.category);
+      this.getTasksDetail(this.user.email, 0, this.category);
     }
 
     if(this.idlist){
-      this.getTasksDetail(this.user.uid,this.idlist, "");
+      this.getTasksDetail(this.user.email,this.idlist, "");
     }
 
   }

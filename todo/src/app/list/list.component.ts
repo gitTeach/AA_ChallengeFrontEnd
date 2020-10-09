@@ -50,8 +50,8 @@ export class ListComponent implements OnInit {
 
     this.user = await this.authService.getCurrentFirebaseUser();
     if (this.user) {
-      this.getListsForUser(this.user.uid);
-      this.getTasksOverall(this.user.uid,'all');
+      this.getListsForUser(this.user.email);
+      this.getTasksOverall(this.user.email,'all');
     }
 
     
@@ -76,11 +76,11 @@ export class ListComponent implements OnInit {
     const { name, description } = this.listForm.value;
     this.list.name = name;
     this.list.description = description;
-    this.list.userId = this.user.uid;
+    this.list.userId = this.user.email;
 
     return this.listService.createListForUser(this.list).subscribe((data) => {
       this.toastr.success('The list has been created.');
-      this.getListsForUser(this.user.uid);
+      this.getListsForUser(this.user.email);
       this.onReset();
     })
     

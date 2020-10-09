@@ -75,11 +75,11 @@ export class AddEditTaskComponent implements OnInit {
     this.user = await this.authService.getCurrentFirebaseUser();
 
     if (this.user) {
-      this.getListsForUser(this.user.uid);
+      this.getListsForUser(this.user.email);
       
       if(this.idTask > 0){
       
-        await this.taskService.getTask(this.idTask, this.user.uid)
+        await this.taskService.getTask(this.idTask, this.user.email)
           .subscribe(data => (
             this.etask = data,
             this.addEditTaskForm.controls["description"].setValue(data.description),
