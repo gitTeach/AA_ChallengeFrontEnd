@@ -32,6 +32,9 @@ export class AddEditTaskComponent implements OnInit {
   public listCollection: any;
   public selectedListId: any;
 
+  /*Edit action */
+  etask : Task;
+  
   constructor(
     private taskService: TaskService,
     private listService:ListService,
@@ -46,23 +49,13 @@ export class AddEditTaskComponent implements OnInit {
     const id = 'id';
 
     if (this.route.snapshot.params[id]) {
-      this.idTask = this.route.snapshot.params[id];
-      this.action = 'Edit';
-      this.action = 'Edit Task'
-      console.log(this.idTask);
-      console.log(this.action);
-    }
-  }
-
-  async ngOnInit() {
-
-    this.user = await this.authService.getCurrentFirebaseUser();
-    if (this.user) {
-      this.getListsForUser(this.user.uid);
+      this.idTask = parseInt(this.route.snapshot.params[id]);
+      this.action = 'edit';
+      this.actionTitle = 'Edit Task'
     }
 
-    /* Form Builder */
-    this.addEditTaskForm = new FormGroup({
+     /* Form Builder */
+     this.addEditTaskForm = new FormGroup({
       description: new FormControl('', [
         Validators.required,
         Validators.maxLength(200),
@@ -75,20 +68,30 @@ export class AddEditTaskComponent implements OnInit {
       isImportant: new FormControl(false),
       list: new FormControl('', [Validators.required])
     });
+  }
 
-    // this.addEditTaskForm = this.formBuilder.group({
-
-    //   description: ['', [Validators.required, Validators.maxLength(200)]],
-    //   remindeDate : [],
-    //   dueDate : [Validators.required],
-    //   myDayDate : [],
-    //   Notes : [],
-    //   isCompleted : [],
-    //   isImportant : [],
-    // });
+  async ngOnInit() {
 
     this.user = await this.authService.getCurrentFirebaseUser();
+
     if (this.user) {
+      this.getListsForUser(this.user.uid);
+      
+      if(this.idTask > 0){
+      
+        await this.taskService.getTask(this.idTask, this.user.uid)
+          .subscribe(data => (
+            this.etask = data,
+            this.addEditTaskForm.controls["description"].setValue(data.description),
+            this.addEditTaskForm.controls["notes"].setValue(data.notes),
+            this.addEditTaskForm.controls["dueDate"].setValue( new Date(data.dueDate)),
+            this.addEditTaskForm.controls["list"].setValue(data.idList),
+            this.addEditTaskForm.controls["isImportant"].setValue(data.isImportant),
+            this.addEditTaskForm.controls["isCompleted"].setValue(data.isCompleted),
+            this.addEditTaskForm.controls["remindDate"].setValue( new Date(data.remindDate)),
+            this.addEditTaskForm.controls["myDayDate"].setValue( new Date(data.myDayDate))
+          ));
+      }
     }
   }
 
@@ -97,8 +100,7 @@ export class AddEditTaskComponent implements OnInit {
   }
 
   Save() {
-    console.log(this.addEditTaskForm.controls);
-
+    
     this.submitted = true;
 
     if (this.addEditTaskForm.invalid) {
@@ -117,23 +119,19 @@ export class AddEditTaskComponent implements OnInit {
       isImportant,
     } = this.addEditTaskForm.value;
 
-    console.log(this.addEditTaskForm);
+    let task: Task = {
+      id: 0,
+      idList : parseInt(list),
+      description: description,
+      remindDate: remindDate,
+      dueDate: dueDate,
+      myDayDate: myDayDate,
+      notes: notes,
+      isCompleted: isCompleted,
+      isImportant: isImportant
+    };
 
     if (this.action === 'add') {
-      let task: Task = {
-        id: 0,
-        idList : parseInt(list),
-        description: description,
-        remindDate: remindDate,
-        dueDate: dueDate,
-        myDayDate: myDayDate,
-        notes: notes,
-        isCompleted: isCompleted,
-        isImportant: isImportant
-      };
-
-      console.log(task);
-
       return this.taskService.createTaskForList(task).subscribe((data) => {
         this.toastr.success('The task has been created.');
         this.router.navigate(['/task/show/all']);
@@ -141,15 +139,20 @@ export class AddEditTaskComponent implements OnInit {
       })
     }
 
-    
+    if (this.action === 'edit') {
+      task.id = this.idTask;
+      return this.taskService.updateTask(task).subscribe((data) => {
+        this.toastr.success('The task has been updated.');
+        this.router.navigate(['/task/show/all']);
+        this.onReset();
+      })
+    }
   }
 
   onReset() {
     this.submitted = false;
     this.addEditTaskForm.reset();
   }
-
-  
 
   getListsForUser(uid: string) {
     this.listCollection = this.listService.getListsForUser(uid);

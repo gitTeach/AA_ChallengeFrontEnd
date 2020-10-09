@@ -45,9 +45,14 @@ export class TaskService {
         return this.http.post<Task>(`${baseUrl}/CreateTaskForList`, JSON.stringify(task) , this.httpOptions)
     }
 
-    getTask(idTask: number): Observable<Task> {
+  updateTask(task : Task) : Observable<Task>{
+      return this.http.put<Task>(`${baseUrl}/UpdateTask`, JSON.stringify(task) , this.httpOptions)
+  }
+
+  getTask(idTask: number, userId: string): Observable<Task> {
         let params = new HttpParams();
         params = params.append('idTask', idTask.toString());
+        params = params.append('userId', userId);
         return this.http.get<Task>(`${baseUrl}/GetTask`, { params: params })
                         .pipe(retry(1), catchError(this.handleError));
     }

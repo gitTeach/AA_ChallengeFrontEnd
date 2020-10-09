@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit {
     }).catch((err) => {
       this.toastr.error(err.message);
       this.router.navigate(['/login']);
-      console.log('Error Login:', err.message);
     });;
   }
 

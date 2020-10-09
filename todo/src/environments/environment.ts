@@ -22,7 +22,7 @@ export const environment = {
     // appId: "1:478287361648:web:5ec1b69c068393d6a766b5",
     // measurementId: "G-TGH1KWDCG2"
   },
-  apiUrl: 'http://localhost:53245/api'
+  apiUrl: 'http://localhost:53247/api'
 };
 
 /*

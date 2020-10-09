@@ -43,10 +43,6 @@ export class ListComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-
-
-    
-
     this.listForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(200)]],
@@ -54,7 +50,6 @@ export class ListComponent implements OnInit {
 
     this.user = await this.authService.getCurrentFirebaseUser();
     if (this.user) {
-      console.log('list component->', this.user);
       this.getListsForUser(this.user.uid);
       this.getTasksOverall(this.user.uid,'all');
     }
@@ -71,7 +66,6 @@ export class ListComponent implements OnInit {
   }
 
   createList() {
-    console.log(this.listForm.controls);
 
     this.submitted = true;
 

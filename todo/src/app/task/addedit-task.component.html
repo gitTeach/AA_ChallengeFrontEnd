@@ -9,7 +9,7 @@
           <select  class="form-control" formControlName = "list" [ngClass]="{ 'is-invalid': submitted && gForm.list.errors }">
             <option [value]="listItem.id" *ngFor="let listItem of (listCollection | async)">{{listItem.name}}</option>
           </select>
-          <div *ngIf="submitted && gForm.list.errors.required" class="invalid-feedback">
+          <div *ngIf="submitted && (gForm.list.errors != null)" class="invalid-feedback">
               <div *ngIf="gForm.list.errors.required">Please Select a List. If you haven't registered a list, create one first.</div>
           </div>
         </div>

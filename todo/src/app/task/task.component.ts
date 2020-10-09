@@ -36,12 +36,10 @@ export class TaskComponent implements OnInit {
     
     if (this.route.snapshot.params[category]) {
       this.category = this.route.snapshot.params[category];
-      console.log(this.category);
     }
 
     if (this.route.snapshot.params[idlist]) {
       this.idlist = this.route.snapshot.params[idlist];
-      console.log(this.idlist);
     }
 
   }
@@ -84,6 +82,10 @@ export class TaskComponent implements OnInit {
 
   addTask(){
     this.router.navigate(['/task/add']);
+  }
+
+  viewEditTask(id){
+    this.router.navigate(['../task/edit/', id]);
   }
   
 }

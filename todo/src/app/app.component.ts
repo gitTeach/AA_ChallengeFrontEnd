@@ -29,7 +29,6 @@ export class AppComponent {
   ngOnInit() {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        console.log(user);
         this.isLogged = true;
         this.router.navigate(['/list']);
       } else {
@@ -46,7 +45,6 @@ export class AppComponent {
         this.router.navigate(['/login']);
       })
       .catch((err) => {
-        console.log('Error:', err.message);
       });
   }
 }

@@ -55,22 +55,9 @@ export class AuthService {
     this.user$.next(User);
   }
 
-  // login(email: string, password: string) {
-  //   return this.afAuth
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then((value) => {
-  //       console.log(value);
-  //       //localStorage.setItem('currentUser', JSON.stringify(user));
-  //       console.log('Logged');
-  //     })
-  //     .catch((err) => {
-  //       console.log('Error:', err.message);
-  //     });
-  // }
-
   login(email: string, password: string) : Promise<void> {
     return this.afAuth.signInWithEmailAndPassword(email, password).then((auth) => {
-      console.log(auth);
+      
     });
   }
 
@@ -78,7 +65,6 @@ export class AuthService {
     return await this.afAuth
       .signOut()
       .then(function () {
-        console.log('User logged out');
       })
       .catch(function (error) {
         console.error(error);
