@@ -25,7 +25,7 @@
     <div class="col-lg-12">
       <div class="list-group">
         
-        <a *ngFor="let taskitem of taskCollectionFiltered" class="list-group-item list-group-item-action flex-column align-items-start">
+        <a style="border-bottom:double;" *ngFor="let taskitem of taskCollectionFiltered" class="list-group-item list-group-item-action flex-column align-items-start">
           <div>
             <span class="badge badge-pill badge-primary">{{taskitem.listName}}</span>
           </div>
@@ -36,7 +36,7 @@
           <br>
           <p class="mb-1">{{taskitem.notes}}</p>
           <br>
-          <span style="padding-right: 2%;" [hidden]="taskitem.bDueDate" class="fa fa-hourglass-end" title="Due Today" data-toggle="tooltip" data-placement="top" ></span>
+          <span style="padding-right: 2%;" [hidden]="!taskitem.bDueDate" class="fa fa-hourglass-end" title="Due Today" data-toggle="tooltip" data-placement="top" ></span>
           <span style="padding-right: 2%;" [hidden]="!taskitem.isCompleted" class="fa fa-check" title="Completed" data-toggle="tooltip" data-placement="top" tooltip ></span>
           <span style="padding-right: 2%;" [hidden]="!taskitem.isImportant" class="fa fa-exclamation" title="Important" data-toggle="tooltip" data-placement="top" tooltip ></span>
           <span style="padding-right: 2%;" [hidden]="!taskitem.bMyDayDate" class="fa fa-star" title="My Day" data-toggle="tooltip" data-placement="top" tooltip ></span>

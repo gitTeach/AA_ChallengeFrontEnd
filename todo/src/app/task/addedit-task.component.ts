@@ -73,7 +73,7 @@ export class AddEditTaskComponent implements OnInit {
       notes: new FormControl(),
       isCompleted: new FormControl(false),
       isImportant: new FormControl(false),
-      list: new FormControl([Validators.required])
+      list: new FormControl('', [Validators.required])
     });
 
     // this.addEditTaskForm = this.formBuilder.group({

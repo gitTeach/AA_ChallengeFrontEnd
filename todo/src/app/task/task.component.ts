@@ -49,13 +49,13 @@ export class TaskComponent implements OnInit {
   async ngOnInit() {
 
     this.user = await this.authService.getCurrentFirebaseUser();
-
+    
     if(this.category){
-      this.getTasksDetail(this.user.uid, 0);
+      this.getTasksDetail(this.user.uid, 0, this.category);
     }
 
     if(this.idlist){
-      this.getTasksDetail(this.user.uid,this.idlist);
+      this.getTasksDetail(this.user.uid,this.idlist, "");
     }
 
   }
@@ -63,8 +63,8 @@ export class TaskComponent implements OnInit {
   getTasksForList(idList: number) {
     return this.taskService.getTasksForList(idList).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
   }
-  getTasksDetail(userId: string, idlist:number) {
-    return this.taskService.getTasksDetail(userId, idlist).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
+  getTasksDetail(userId: string, idlist:number, category: string) {
+    return this.taskService.getTasksDetail(userId, idlist, category).pipe(first()).subscribe((data) => {this.taskCollection = data, this.taskCollectionFiltered = data});
   }
 
   assignCopy() {

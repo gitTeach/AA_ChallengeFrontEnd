@@ -26,19 +26,20 @@ export class TaskService {
                         .pipe(retry(1), catchError(this.handleError));
     }
 
-    // getTasksForUser(userId: string): Observable<Task[]> {
-    //     let params = new HttpParams();
-    //     params = params.append('userId', userId.toString());
-    //     return this.http.get<Task[]>(`${baseUrl}/GetTasksForUser`, { params: params })
-    //                     .pipe(retry(1), catchError(this.handleError));
-    // }
-
-    getTasksDetail(userId: string, idList : number) {
+    getTasksDetail(userId: string, idList : number, category : string) {
         let params = new HttpParams();
         params = params.append('userId', userId);
         params = params.append('idList', idList.toString());
+        params = params.append('category', category);
         return this.http.get<Task[]>(`${baseUrl}/GetTasksDetail`, { params: params })
     }
+
+    getTasksOverall(userId: string, category : string) {
+      let params = new HttpParams();
+      params = params.append('userId', userId);
+      params = params.append('category', category.toString());
+      return this.http.get<any>(`${baseUrl}/GetTasksOverall`, { params: params })
+  }
 
     createTaskForList(task : Task) : Observable<Task>{
         return this.http.post<Task>(`${baseUrl}/CreateTaskForList`, JSON.stringify(task) , this.httpOptions)
@@ -58,7 +59,7 @@ export class TaskService {
         } else {
           errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
         }
-        this.toastr.error(errorMessage);
+        //this.toastr.error(errorMessage);
         return throwError(errorMessage);
       }
     
